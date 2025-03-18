@@ -309,7 +309,11 @@ footer {
   header nav {
     display: none;
   }
-  
+
+    .button{
+  font-size: 14px;
+  padding: 8px 12px;
+}
   .contact-grid {
     grid-template-columns: 1fr;
   }
