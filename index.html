@@ -50,6 +50,8 @@
     <section class="card">
       <h2>不具合登録 / 編集</h2>
       <form id="defectForm" class="grid grid-3">
+        <p id="modeBadge" class="badge">新規登録モード</p>
+        <p id="message" class="message" data-kind="info"></p>
         <label>発生日<input name="occurrenceDate" type="date" required></label>
         <label>部品番号<input name="partNumber" type="text" required></label>
         <label>対象缶<input name="targetCan" type="text" required></label>
@@ -79,6 +81,7 @@
       </form>
       <div class="actions">
         <button id="saveBtn" class="primary" type="submit" form="defectForm">保存</button>
+        <button id="clearEditBtn" type="button">編集解除</button>
       </div>
     </section>
 
@@ -87,7 +90,7 @@
       <table>
         <thead>
           <tr>
-            <th>発生日</th><th>部品番号</th><th>対象缶</th><th>対象数</th><th>流動数</th><th>廃却数</th><th>顧客影響</th><th>ステータス</th><th>添付</th><th>操作</th>
+            <th>発生日</th><th>部品番号</th><th>対象缶</th><th>対象数</th><th>流動数</th><th>廃却数</th><th>顧客影響</th><th>ステータス</th><th>添付</th><th>作成日</th><th>操作</th>
           </tr>
         </thead>
         <tbody id="defectTableBody"></tbody>
