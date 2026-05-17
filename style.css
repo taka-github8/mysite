@@ -1,330 +1,59 @@
-/* ベーススタイル */
 :root {
-  --color-primary: #9333ea;
-  --color-primary-hover: #7e22ce;
-  --color-bg: #111827;
-  --color-bg-secondary: #1f2937;
-  --color-text: #f3f4f6;
-  --color-text-secondary: #9ca3af;
-  --color-lancers: #0268cc;
-  --color-lancers-hover: #0253a3;
+  --bg: #0f172a;
+  --card: #111827;
+  --line: #334155;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --primary: #2563eb;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-bg);
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+.container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+header { position: sticky; top: 0; background: #020617; border-bottom: 1px solid var(--line); }
+.header-inner { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; gap: 12px; }
+h1 { font-size: 1.3rem; margin: 0; }
+main { padding: 20px 0 40px; display: grid; gap: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+h2 { margin-top: 0; font-size: 1.1rem; }
+.grid { display: grid; gap: 12px; }
+.grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+label { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; color: var(--muted); }
+input, select, button {
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #0b1220;
+  color: var(--text);
+  padding: 10px;
 }
-
-/* ヘッダー */
-header {
-  background: #000;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 1rem 0;
+button { cursor: pointer; }
+button.primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+button.ghost { background: transparent; }
+.header-actions { display:flex; gap:8px; }
+.actions { margin-top: 12px; }
+.file { margin-top: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; }
+@media (max-width: 900px){
+  .grid-4, .grid-3 { grid-template-columns: 1fr 1fr; }
 }
-
-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+@media (max-width: 600px){
+  .grid-4, .grid-3 { grid-template-columns: 1fr; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
 }
-
-
-nav ul {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-nav a {
-  color: var(--color-text);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-nav a:hover {
-  color: var(--color-primary);
-}
-
-
-/* ボタン */
-.button {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  border-radius: 0.375rem;
-  text-decoration: none;
-  transition: background-color 0.3s;
-  font-weight: 500;
-}
-
-
-a.cta-button{
-  padding: 0.25rem 1rem;
-  display: inline-block;
-  background-color:var(--color-lancers);
-  color: white;
-  text-decoration: none;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease;
-}
-
-a.cta-button:hover {
-  background-color: var(--color-lancers-hover);
-}
-
-.button.primary {
-  background: var(--color-primary);
-  color: white;
-  padding:0.5rem 2rem;
-}
-
-.button.primary:hover {
-  background: var(--color-primary-hover);
-  transform: translateY(-5px);
-}
-
-.button.secondary {
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary);
-}
-
-.button.secondary:hover {
-  transform: translateY(-5px);
-}
-
-.button.secondary:hover {
-  background: rgba(147, 51, 234, 0.1);
-}
-
-/* セクション共通 */
-section {
-  padding: 5rem 0;
-}
-
-h2 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.section-description {
-  text-align: center;
-  color: var(--color-text-secondary);
-  margin-bottom: 3rem;
-}
-
-/* ホーム */
-#home {
-  text-align: center;
-  padding: 5rem 0;
-}
-
-#home h2 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.subtitle {
-  font-size: 1.5rem;
-  color: var(--color-text-secondary);
-  margin-bottom: 2rem;
-}
-
-.buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-/* ポートフォリオ */
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.portfolio-item {
-  background: var(--color-bg-secondary);
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  transition: transform 0.3s;
-}
-
-.portfolio-item:hover {
-  transform: translateY(-5px);
-}
-
-.portfolio-item h3 {
-  color: var(--color-primary);
-  margin-bottom: 1rem;
-}
-
-.tags {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.tags span {
-  background: rgba(147, 51, 234, 0.1);
-  color: var(--color-primary);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.875rem;
-}
-
-/* アバウト */
-.about-content {
-  max-width: 800px;
-  margin: 0 auto;
-  background: var(--color-bg-secondary);
-  padding: 2rem;
-  border-radius: 0.5rem;
-}
-
-.skills {
-  margin: 2rem 0;
-}
-
-.skills ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  list-style: none;
-  margin-top: 1rem;
-}
-
-.skills li {
-  display: flex;
-  align-items: center;
-  color: var(--color-text-secondary);
-}
-
-.skills li::before {
-  content: "✓";
-  color: var(--color-primary);
-  margin-right: 0.5rem;
-}
-
-/* コンタクト */
-.contact-grid {
-  max-width: 800px;
-  margin: 0 auto;
-  background: var(--color-bg-secondary);
-  padding: 0.1rem;
-  border-radius: 0.5rem;
-}
-
-.contact-info {
-  background: var(--color-bg-secondary);
-  padding: 0rem;
-  border-radius: 0.5rem;
-  text-align:center;
-}
-
-.info-item {
-  margin-bottom: 1.5rem;
-}
-
-.info-item h4 {
-  color: var(--color-text-secondary);
-  margin-bottom: 0.5rem;
-}
-
-.lancers-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color:var(--color-lancers);
-  color: white;
-  text-decoration: none;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.lancers-button:hover {
-  background-color: var(--color-lancers-hover);
-}
-
-
-.a button primary {
-  background: var(--color-primary);
-  color: white;
-  padding: 0.5rem 2rem;
-}
-
-.social-icons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.social-icon {
-  color: var(--color-text-secondary);
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.social-icon:hover {
-  color: var(--color-primary);
-}
-
-/* フッター */
-footer {
-  background: #000;
-  padding: 2rem 0;
-}
-
-.footer-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.copyright {
-  text-align: center;
-  color: var(--color-text-secondary);
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--color-bg-secondary);
-}
-
-/* レスポンシブ対応 */
-@media (max-width: 768px) {
-  header nav {
-    display: none;
-  }
-
-    .button{
-  font-size: 14px;
-  padding: 8px 12px;
-}
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-content {
-    flex-direction: column;
-    gap: 1.5rem;
-    text-align: center;
-  }
-  
-  .footer-content nav ul {
-    justify-content: center;
-  }
-}
+.grid-5 { grid-template-columns: repeat(5, minmax(0,1fr)); }
+.actions.inline { display: flex; gap: 8px; }
+.badge { margin: 0 0 8px; color: #bfdbfe; font-weight: 700; }
+.message { margin: 0 0 12px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); }
+.message[data-kind="error"] { background: #450a0a; color: #fecaca; border-color: #7f1d1d; }
+.message[data-kind="success"] { background: #052e16; color: #bbf7d0; border-color: #166534; }
+.message[data-kind="info"] { background: #172554; color: #bfdbfe; border-color: #1d4ed8; }
+td details { max-width: 220px; }
+td details ul { margin: 6px 0 0 16px; padding: 0; }
+@media (max-width: 1100px){ .grid-5 { grid-template-columns: 1fr 1fr 1fr; } }
+@media (max-width: 600px){ .grid-5 { grid-template-columns: 1fr; } }
