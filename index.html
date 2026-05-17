@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>不具合データ管理アプリ（MVPプロトタイプ）</title>
+  <title>不具合データ管理アプリ（実働MVP）</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,8 +11,8 @@
     <div class="container header-inner">
       <h1>不具合データ管理アプリ</h1>
       <div class="header-actions">
-        <button class="ghost">ログイン中: leader01</button>
-        <button class="primary">CSV出力</button>
+        <button class="ghost" type="button">ログイン中: leader01</button>
+        <button id="exportBtn" class="primary" type="button">CSV出力</button>
       </div>
     </div>
   </header>
@@ -20,44 +20,65 @@
   <main class="container">
     <section class="card">
       <h2>検索条件</h2>
-      <form class="grid grid-4">
-        <label>発生日From<input type="date" value="2026-05-01"></label>
-        <label>発生日To<input type="date" value="2026-05-17"></label>
-        <label>部品番号<input type="text" placeholder="例: PN-1234"></label>
+      <form class="grid grid-5" onsubmit="return false;">
+        <label>発生日From<input id="qFrom" type="date"></label>
+        <label>発生日To<input id="qTo" type="date"></label>
+        <label>部品番号<input id="qPart" type="text" placeholder="例: PN-1234"></label>
         <label>ステータス
-          <select>
-            <option>すべて</option>
+          <select id="qStatus">
+            <option value="">すべて</option>
             <option>未対応</option>
             <option>対応中</option>
             <option>完了</option>
           </select>
         </label>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2>不具合登録</h2>
-      <form class="grid grid-3">
-        <label>発生日<input type="date" required></label>
-        <label>部品番号<input type="text" required></label>
-        <label>対象缶<input type="text" required></label>
-        <label>対象数<input type="number" min="0" required></label>
-        <label>流動数<input type="number" min="0" required></label>
-        <label>廃却数<input type="number" min="0" required></label>
-        <label>確認項目<input type="text" required></label>
-        <label>測定値<input type="text" placeholder="例: 2.4mm"></label>
-        <label>顧客への影響
-          <select required>
-            <option value="">選択してください</option>
+        <label>顧客影響
+          <select id="qImpact">
+            <option value="">すべて</option>
             <option>なし</option>
             <option>軽微</option>
             <option>重大</option>
           </select>
         </label>
       </form>
-      <label class="file">異常処置報告書PDF<input type="file" accept="application/pdf" multiple></label>
+      <div class="actions inline">
+        <button id="searchBtn" class="primary" type="button">検索</button>
+        <button id="resetBtn" type="button">条件クリア</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>不具合登録 / 編集</h2>
+      <form id="defectForm" class="grid grid-3">
+        <label>発生日<input name="occurrenceDate" type="date" required></label>
+        <label>部品番号<input name="partNumber" type="text" required></label>
+        <label>対象缶<input name="targetCan" type="text" required></label>
+        <label>対象数<input name="targetCount" type="number" min="0" required></label>
+        <label>流動数<input name="inProcessCount" type="number" min="0" required></label>
+        <label>廃却数<input name="discardCount" type="number" min="0" required></label>
+        <label>確認項目<input name="checkItem" type="text" required></label>
+        <label>測定値<input name="measurementValue" type="text" placeholder="例: 2.4mm"></label>
+        <label>顧客への影響
+          <select name="customerImpact" required>
+            <option value="">選択してください</option>
+            <option>なし</option>
+            <option>軽微</option>
+            <option>重大</option>
+          </select>
+        </label>
+        <label>ステータス
+          <select name="status" required>
+            <option>未対応</option>
+            <option>対応中</option>
+            <option>完了</option>
+          </select>
+        </label>
+        <label class="file">異常処置報告書PDF
+          <input id="pdfFiles" type="file" accept="application/pdf" multiple>
+        </label>
+      </form>
       <div class="actions">
-        <button class="primary" type="button">保存</button>
+        <button id="saveBtn" class="primary" type="submit" form="defectForm">保存</button>
       </div>
     </section>
 
@@ -66,16 +87,13 @@
       <table>
         <thead>
           <tr>
-            <th>発生日</th><th>部品番号</th><th>対象缶</th><th>対象数</th><th>流動数</th><th>廃却数</th><th>顧客影響</th><th>ステータス</th><th>添付</th>
+            <th>発生日</th><th>部品番号</th><th>対象缶</th><th>対象数</th><th>流動数</th><th>廃却数</th><th>顧客影響</th><th>ステータス</th><th>添付</th><th>操作</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td>2026-05-16</td><td>PN-4512</td><td>A缶</td><td>300</td><td>200</td><td>15</td><td>軽微</td><td>対応中</td><td>2件PDF</td></tr>
-          <tr><td>2026-05-12</td><td>PN-7622</td><td>B缶</td><td>120</td><td>80</td><td>20</td><td>重大</td><td>未対応</td><td>1件PDF</td></tr>
-          <tr><td>2026-05-04</td><td>PN-3301</td><td>C缶</td><td>500</td><td>420</td><td>0</td><td>なし</td><td>完了</td><td>3件PDF</td></tr>
-        </tbody>
+        <tbody id="defectTableBody"></tbody>
       </table>
     </section>
   </main>
+  <script src="app.js"></script>
 </body>
 </html>
